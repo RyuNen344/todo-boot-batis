@@ -12,4 +12,4 @@ pluginManagement {
         }
     }
 }
-rootProject.name = "todo-boot-batis"
+rootProject.name = "todo_boot_batis"

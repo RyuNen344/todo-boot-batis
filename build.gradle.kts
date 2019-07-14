@@ -1,3 +1,4 @@
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -28,6 +29,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1")
     runtimeOnly("mysql:mysql-connector-java")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
         exclude(group = "junit", module = "junit")
@@ -49,5 +51,16 @@ tasks.getByName("war") {
 }
 tasks.getByName("jar") {
     this.enabled = true
+}
+
+tasks.getByName("idea") {
+    this.enabled = true
+}
+
+idea {
+    module {
+        outputDir = file("build/classes/main")
+        testOutputDir = file("build/classes/test")
+    }
 }
 
