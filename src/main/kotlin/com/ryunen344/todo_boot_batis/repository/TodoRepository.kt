@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface TodoRepository {
 
-
     @Insert("INSERT INTO todo (title, detail, status) VALUES (#{title}, #{detail}, #{status})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     fun insert(todo : Todo) : Boolean

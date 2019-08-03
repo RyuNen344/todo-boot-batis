@@ -5,3 +5,11 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     initialization-mode: always
+
+
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    org.springframework.web: DEBUG
