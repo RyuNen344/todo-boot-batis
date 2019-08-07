@@ -11,9 +11,15 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.context.ServletContextAware
+import java.util.function.Consumer
+import javax.servlet.Filter
+import javax.servlet.ServletContext
+
+
 
 @SpringBootApplication
-class TodoBootBatisApplication : CommandLineRunner {
+class TodoBootBatisApplication : CommandLineRunner, ServletContextAware {
 
     @Autowired(required = false)
     private lateinit var todoRepository : TodoRepository
@@ -40,6 +46,21 @@ class TodoBootBatisApplication : CommandLineRunner {
         logger.info(insertAccount.toString())
 
 
+    }
+
+    @Autowired // DIコンテナに登録されているFilterクラスの確認
+    fun dumpFilters(filters : List<Filter>) {
+        logger.info("--- filters in DI container ----")
+        filters.forEach(Consumer<Filter> { f -> logger.info(f.toString()) })
+    }
+
+    override// サーブレットコンテナに登録されているFilterクラスの確認
+    fun setServletContext(servletContext : ServletContext) {
+        logger.info("--- filters in servlet context ----")
+        servletContext.filterRegistrations.values.forEach { r ->
+            logger.info(String.format("name:%s url-mappings:%s servlet-mappings:%s",
+                    r.name, r.urlPatternMappings, r.servletNameMappings))
+        }
     }
 }
 
